@@ -1,0 +1,986 @@
+/* ===================================================================
+   SHONEN JUMP COMPONENTS
+   =================================================================== */
+
+/* ===================================================================
+   LOADER — "Cargando el siguiente capítulo..."
+   =================================================================== */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  gap: 1.75rem;
+}
+
+.loader-spinner {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Círculo rojo estilo logo Jump girando */
+.loader-spinner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 6px solid var(--sj-black);
+  border-top-color: var(--sj-red);
+  border-radius: 50%;
+  animation: jumpSpin 1s linear infinite;
+  box-shadow: var(--shadow-hard-red);
+}
+
+.loader-spinner::after {
+  content: '読';
+  font-family: var(--font-jp);
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: var(--sj-black);
+  background: var(--sj-yellow);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--sj-black);
+  transform: rotate(-6deg);
+}
+
+@keyframes jumpSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loader-ring {
+  display: none; /* Ya no usamos los anillos originales */
+}
+
+.loader-message {
+  font-family: var(--font-display);
+  color: var(--sj-white);
+  font-size: 1.4rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.5rem;
+  background: var(--sj-black);
+  border: 3px solid var(--sj-yellow);
+  transform: rotate(-1deg);
+  box-shadow: 4px 4px 0 var(--sj-red);
+  animation: loaderPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes loaderPulse {
+  0%, 100% { transform: rotate(-1deg) scale(1); }
+  50% { transform: rotate(1deg) scale(1.03); }
+}
+
+/* ===================================================================
+   ERROR MESSAGE — ¡Panel de manga!
+   =================================================================== */
+.error-container {
+  text-align: center;
+  padding: 2.5rem 2rem;
+  background: var(--sj-paper);
+  border: var(--ink-border);
+  box-shadow: var(--shadow-hard-red);
+  max-width: 520px;
+  margin: 2rem auto;
+  transform: rotate(-1deg);
+  position: relative;
+  animation: panelPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes panelPop {
+  0% { transform: rotate(-8deg) scale(0.85); opacity: 0; }
+  100% { transform: rotate(-1deg) scale(1); opacity: 1; }
+}
+
+/* Halftone de fondo */
+.error-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(230, 0, 18, 0.12) 1.5px, transparent 1.5px);
+  background-size: 9px 9px;
+  pointer-events: none;
+}
+
+.error-icon {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+  filter: drop-shadow(3px 3px 0 var(--sj-black));
+  animation: shake 0.6s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
+}
+
+.error-title {
+  font-family: var(--font-display);
+  color: var(--sj-red);
+  font-size: 2.2rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-shadow: 3px 3px 0 var(--sj-black);
+  margin-bottom: 0.75rem;
+  -webkit-text-stroke: 1px var(--sj-black);
+}
+
+.error-message {
+  color: var(--sj-black);
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+.error-retry-btn {
+  font-family: var(--font-display);
+  background: var(--sj-red);
+  color: var(--sj-white);
+  border: var(--ink-border-thin);
+  padding: 0.7rem 2.2rem;
+  font-size: 1.15rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--sj-black);
+  transition: all 0.15s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.error-retry-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--sj-black);
+  background: var(--sj-yellow);
+  color: var(--sj-black);
+}
+
+.error-retry-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--sj-black);
+}
+
+/* ===================================================================
+   SEARCH BAR — Barra de "Buscar en el archivo Jump"
+   =================================================================== */
+.searchbar {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto 2rem;
+  position: relative;
+  z-index: 5;
+}
+
+.searchbar-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchbar-icon {
+  position: absolute;
+  left: 1rem;
+  font-size: 1.3rem;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(1px 1px 0 var(--sj-white));
+}
+
+.searchbar-input {
+  width: 100%;
+  padding: 1.05rem 3.25rem 1.05rem 3.25rem;
+  background: var(--sj-white);
+  border: var(--ink-border);
+  color: var(--sj-black);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  transition: transform 0.15s, box-shadow 0.15s;
+  outline: none;
+  box-shadow: var(--shadow-hard);
+  letter-spacing: 0.02em;
+}
+
+.searchbar-input::placeholder {
+  color: #888;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+.searchbar-input:focus {
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0 var(--sj-red);
+  background: var(--sj-paper);
+}
+
+.searchbar-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.searchbar-clear {
+  position: absolute;
+  right: 0.9rem;
+  background: var(--sj-red);
+  border: 3px solid var(--sj-black);
+  color: var(--sj-white);
+  font-size: 0.9rem;
+  font-weight: 900;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: transform 0.15s, background 0.15s;
+  z-index: 2;
+}
+
+.searchbar-clear:hover {
+  transform: rotate(90deg) scale(1.1);
+  background: var(--sj-yellow);
+  color: var(--sj-black);
+}
+
+/* ===================================================================
+   ANIME CARD — ¡Panel de manga!
+   =================================================================== */
+.anime-card {
+  background: var(--sj-white);
+  border: var(--ink-border);
+  cursor: pointer;
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: var(--shadow-hard);
+  transform-style: preserve-3d;
+  overflow: visible;
+}
+
+.anime-card:hover {
+  transform: translate(-4px, -4px) rotate(-1deg);
+  box-shadow: 12px 12px 0 var(--sj-red), 12px 12px 0 4px var(--sj-black);
+  z-index: 10;
+}
+
+.anime-card:active {
+  transform: translate(2px, 2px) rotate(0);
+  box-shadow: 4px 4px 0 var(--sj-black);
+}
+
+.anime-card:focus-visible {
+  outline: 4px solid var(--sj-yellow);
+  outline-offset: 4px;
+}
+
+/* Cinta diagonal decorativa superior */
+.anime-card::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  width: 40px;
+  height: 40px;
+  background: var(--sj-yellow);
+  border: 3px solid var(--sj-black);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  z-index: 3;
+}
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 140%;
+  overflow: hidden;
+  background: var(--sj-black);
+  border-bottom: var(--ink-border);
+}
+
+.card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease, filter 0.3s ease;
+  filter: contrast(1.05) saturate(1.05);
+}
+
+.anime-card:hover .card-image {
+  transform: scale(1.08);
+  filter: contrast(1.15) saturate(1.2);
+}
+
+/* Halftone sobre la imagen al hover */
+.card-image-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(0, 0, 0, 0.5) 1.5px, transparent 1.5px);
+  background-size: 8px 8px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.anime-card:hover .card-image-wrapper::after {
+  opacity: 0.5;
+}
+
+/* Score: círculo rojo tipo logo Jump */
+.card-score {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--sj-white);
+  background: var(--sj-red);
+  border: 4px solid var(--sj-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  box-shadow: 3px 3px 0 var(--sj-black);
+  transform: rotate(-8deg);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.anime-card:hover .card-score {
+  transform: rotate(8deg) scale(1.1);
+  background: var(--sj-yellow);
+  color: var(--sj-black);
+}
+
+.card-body {
+  padding: 1rem 0.9rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+  background: var(--sj-white);
+  position: relative;
+}
+
+/* Línea de tinta con acento de color */
+.card-body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0.9rem;
+  right: 0.9rem;
+  height: 3px;
+  background: var(--sj-black);
+  transform: translateY(-1.5px);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--sj-black);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding-top: 0.2rem;
+}
+
+.card-subtitle {
+  font-size: 0.72rem;
+  color: #666;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-style: italic;
+}
+
+.card-badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--sj-white);
+  background: var(--sj-black);
+  border: 2px solid var(--sj-black);
+  padding: 0.15rem 0.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  width: fit-content;
+  transform: skewX(-6deg);
+  margin-top: 0.15rem;
+}
+
+.card-badge > * {
+  display: inline-block;
+  transform: skewX(6deg);
+}
+
+.card-description {
+  color: var(--sj-gray-700);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  min-height: 3.4em;
+}
+
+.card-meta {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--sj-black);
+  margin-top: auto;
+  padding-top: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===================================================================
+   MODAL — Página de manga
+   =================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.9);
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.05) 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+  animation: overlayIn 0.25s ease-out;
+  backdrop-filter: blur(3px);
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: var(--sj-paper);
+  border: 5px solid var(--sj-black);
+  max-width: 880px;
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+  position: relative;
+  animation: panelSlam 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow:
+    12px 12px 0 var(--sj-red),
+    12px 12px 0 6px var(--sj-black);
+}
+
+@keyframes panelSlam {
+  0% {
+    opacity: 0;
+    transform: scale(1.4) rotate(-6deg);
+    filter: brightness(2);
+  }
+  60% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+    filter: brightness(1);
+  }
+}
+
+/* Onomatopeya "ドン!" decorativa */
+.modal-content::before {
+  content: 'ドン！';
+  position: absolute;
+  top: -30px;
+  left: -20px;
+  font-family: var(--font-jp);
+  font-weight: 900;
+  font-size: 2.5rem;
+  color: var(--sj-yellow);
+  text-shadow:
+    4px 4px 0 var(--sj-black),
+    -2px -2px 0 var(--sj-black),
+    2px -2px 0 var(--sj-black),
+    -2px 2px 0 var(--sj-black);
+  transform: rotate(-12deg);
+  z-index: 20;
+  pointer-events: none;
+  animation: onomatopoeia 0.6s 0.15s backwards cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes onomatopoeia {
+  0% { transform: rotate(-12deg) scale(0); }
+  100% { transform: rotate(-12deg) scale(1); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 44px;
+  height: 44px;
+  background: var(--sj-red);
+  border: 4px solid var(--sj-black);
+  color: var(--sj-white);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+  box-shadow: 3px 3px 0 var(--sj-black);
+  transition: transform 0.15s, background 0.15s;
+  border-radius: 0;
+}
+
+.modal-close:hover {
+  background: var(--sj-yellow);
+  color: var(--sj-black);
+  transform: rotate(90deg) scale(1.1);
+}
+
+.modal-close:active {
+  transform: rotate(90deg) scale(0.95);
+}
+
+.modal-loader {
+  padding: 4rem 2rem;
+}
+
+.modal-body {
+  padding: 1.75rem;
+}
+
+/* Header del modal */
+.modal-header {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.5rem;
+  border-bottom: 4px solid var(--sj-black);
+}
+
+.modal-image {
+  width: 210px;
+  height: 315px;
+  object-fit: cover;
+  border: 4px solid var(--sj-black);
+  box-shadow: 6px 6px 0 var(--sj-yellow);
+  flex-shrink: 0;
+  transform: rotate(-1.5deg);
+  transition: transform 0.3s ease;
+}
+
+.modal-image:hover {
+  transform: rotate(1.5deg) scale(1.02);
+}
+
+.modal-header-info {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--sj-black);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 var(--sj-red);
+}
+
+.modal-japanese {
+  font-family: var(--font-jp);
+  font-weight: 700;
+  color: var(--sj-red);
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.modal-english {
+  color: #555;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.modal-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.modal-badge {
+  padding: 0.35rem 0.8rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 3px solid var(--sj-black);
+  transform: skewX(-8deg);
+  box-shadow: 3px 3px 0 var(--sj-black);
+  transition: transform 0.15s;
+}
+
+.modal-badge:hover {
+  transform: skewX(-8deg) translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--sj-black);
+}
+
+.modal-badge.type {
+  background: var(--sj-red);
+  color: var(--sj-white);
+}
+
+.modal-badge.status {
+  background: var(--sj-yellow);
+  color: var(--sj-black);
+}
+
+.modal-badge.rating {
+  background: var(--sj-white);
+  color: var(--sj-black);
+}
+
+/* Secciones */
+.modal-section {
+  margin-bottom: 1.75rem;
+}
+
+.modal-section h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--sj-black);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 0.2rem 0.8rem;
+  background: var(--sj-yellow);
+  border: 3px solid var(--sj-black);
+  box-shadow: 3px 3px 0 var(--sj-black);
+  transform: rotate(-1deg);
+}
+
+.modal-synopsis {
+  color: var(--sj-black);
+  font-size: 0.92rem;
+  line-height: 1.75;
+  text-align: justify;
+  font-weight: 500;
+  padding: 1rem;
+  background: var(--sj-white);
+  border: 3px solid var(--sj-black);
+  position: relative;
+}
+
+/* Grid de stats */
+.modal-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.75rem;
+}
+
+.modal-stat {
+  background: var(--sj-white);
+  border: 3px solid var(--sj-black);
+  padding: 0.7rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  box-shadow: 3px 3px 0 var(--sj-black);
+  transition: all 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-stat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: var(--sj-red);
+}
+
+.modal-stat:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--sj-red);
+}
+
+.stat-label {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--sj-black);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding-left: 0.5rem;
+}
+
+.stat-value {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--sj-black);
+  padding-left: 0.5rem;
+}
+
+/* Géneros */
+.modal-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.genre-tag {
+  font-family: var(--font-display);
+  background: var(--sj-red);
+  color: var(--sj-white);
+  border: 3px solid var(--sj-black);
+  padding: 0.3rem 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.15s;
+  transform: skewX(-6deg);
+  box-shadow: 2px 2px 0 var(--sj-black);
+}
+
+.genre-tag:hover {
+  transform: skewX(-6deg) translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--sj-black);
+  background: var(--sj-yellow);
+  color: var(--sj-black);
+}
+
+.genre-tag.studio {
+  background: var(--sj-black);
+  color: var(--sj-yellow);
+}
+
+.genre-tag.studio:hover {
+  background: var(--sj-yellow);
+  color: var(--sj-black);
+}
+
+/* Botón trailer */
+.modal-trailer-btn {
+  display: inline-block;
+  font-family: var(--font-display);
+  background: var(--sj-red);
+  color: var(--sj-white);
+  text-decoration: none;
+  padding: 0.85rem 2.2rem;
+  font-size: 1.15rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 4px solid var(--sj-black);
+  box-shadow: 5px 5px 0 var(--sj-black);
+  transition: all 0.15s ease;
+  transform: skewX(-6deg);
+}
+
+.modal-trailer-btn:hover {
+  transform: skewX(-6deg) translate(-3px, -3px);
+  box-shadow: 8px 8px 0 var(--sj-black);
+  background: var(--sj-yellow);
+  color: var(--sj-black);
+}
+
+.modal-trailer-btn:active {
+  transform: skewX(-6deg) translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--sj-black);
+}
+
+/* ===================================================================
+   PAGINATION — Estilo "capítulos"
+   =================================================================== */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2.5rem 0 1.5rem;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  font-family: var(--font-display);
+  min-width: 48px;
+  height: 48px;
+  padding: 0 0.75rem;
+  background: var(--sj-white);
+  border: 3px solid var(--sj-black);
+  color: var(--sj-black);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 4px 0 var(--sj-black);
+  text-transform: uppercase;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: var(--sj-yellow);
+  transform: translate(-2px, -2px) rotate(-2deg);
+  box-shadow: 6px 6px 0 var(--sj-black);
+}
+
+.pagination-btn.active {
+  background: var(--sj-red);
+  color: var(--sj-white);
+  transform: translate(-2px, -2px) rotate(-2deg);
+  box-shadow: 6px 6px 0 var(--sj-black);
+  position: relative;
+}
+
+.pagination-btn.active::before {
+  content: '★';
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: var(--sj-yellow);
+  color: var(--sj-black);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 3px solid var(--sj-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  transform: rotate(15deg);
+}
+
+.pagination-btn:active:not(:disabled) {
+  transform: translate(2px, 2px) rotate(0);
+  box-shadow: 1px 1px 0 var(--sj-black);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: 2px 2px 0 var(--sj-black);
+}
+
+/* ===================================================================
+   RESPONSIVE
+   =================================================================== */
+@media (max-width: 700px) {
+  .modal-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .modal-image {
+    width: 170px;
+    height: 255px;
+  }
+
+  .modal-badges {
+    justify-content: center;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+  }
+
+  .modal-content::before {
+    font-size: 1.8rem;
+    top: -22px;
+    left: -10px;
+  }
+
+  .modal-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pagination-btn {
+    min-width: 40px;
+    height: 40px;
+    font-size: 0.95rem;
+    padding: 0 0.55rem;
+  }
+
+  .card-score {
+    width: 48px;
+    height: 48px;
+    font-size: 1.1rem;
+    top: -10px;
+    right: -10px;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .results-info {
+    font-size: 1rem;
+    padding: 0.45rem 1rem;
+  }
+
+  .results-info::after {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    top: -10px;
+    right: -10px;
+  }
+}
